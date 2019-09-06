@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:wifi/wifi.dart';
-
+import 'dart:io';
+import 'dart:convert';
 class AddcajaTex extends StatelessWidget{
   @override
   Widget build(BuildContext context) {
@@ -22,6 +23,23 @@ class Cajatext extends StatefulWidget{
 }
 
 class _MyApp1 extends State<Cajatext>{
+  String _host = '172.16.1.103';
+String path = 'file.txt';
+
+
+Map jsonData = {
+  
+};
+
+Future optmsj(String dirIP) async {
+  String smsj='fdgsd';
+  HttpClientRequest request = await HttpClient().post(dirIP, 4040, path) /*1*/
+    ..headers.contentType = ContentType.json /*2*/
+    ..write(jsonEncode(jsonData)); /*3*/
+  HttpClientResponse response = await request.close(); /*4*/
+await response.transform(utf8.decoder /*5*/).forEach(print);
+
+}
   String ip="";
   String ssid="";
   int senal=0;
@@ -54,10 +72,16 @@ getInofoSsid() async{
     miCotrolador.dispose();
     super.dispose();
   }*/
+  
+  int n=0;
   @override
   Widget build(BuildContext context) {
 
+   optmsj('192.168.43.299');
+  
+    
     return Scaffold(
+      
       drawer: Drawer(
         child: ListView(
           padding: EdgeInsets.zero,
@@ -150,7 +174,7 @@ getInofoSsid() async{
             icon: Icon(Icons.send),
             tooltip: 'Boton de envio ',
             onPressed: () {
-            
+
               if (miCotrolador.text !=""){
               litems.add(miCotrolador.text);  // Append Text to the list
               miCotrolador.clear();     // Clear the Text area
